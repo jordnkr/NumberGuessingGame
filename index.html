@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>Guess the Number</title>
+</head>
+<body>
+    <h1>Guess the Number</h1>
+    <p>I'm thinking of a number between 0 and 100. Can you guess it in 3 attempts?</p>
+    <input type="text" id="guess-input" placeholder="Enter your guess here"></input>
+    <button onclick="checkGuess()">Submit</button>
+    <p id="result"></p>
+    <script>
+        let actualNumber = Math.floor(Math.random() * 100);
+        let numGuesses = 0;
+        let hasBonusGuess = false;
+        
+        function checkGuess() {
+            let guess = parseInt(document.getElementById('guess-input').value);
+            if (guess === actualNumber) {
+                document.getElementById('result').innerHTML = 'You guessed the number!';
+                return;
+            }
+            if (Math.abs(guess - actualNumber) <= 5 && !hasBonusGuess) {
+                document.getElementById('result').innerHTML = 'You are within 5 of the actual number! You get a bonus guess.';
+                hasBonusGuess = true;
+            } else {
+                numGuesses++;
+                if (numGuesses >= 3) {
+                    document.getElementById('result').innerHTML = 'Sorry, you are out of guesses. The actual number was ' + actualNumber + '.';
+                    return;
+                }
+                document.getElementById('result').innerHTML = 'Your guess is ' + (guess > actualNumber ? 'higher' : 'lower') + ' than the actual number. You have ' + (3 - numGuesses) + ' guesses left.';
+            }
+        }
+    </script>
+</body>
+</html>
